@@ -30,4 +30,6 @@ class ofApp : public ofBaseApp{
 
         float noiseSpread1;
         float noiseSpread2;
+    
+        bool START = false;
 };

@@ -26,6 +26,11 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
+    if(!START)
+    {
+        return;
+    }
+    
     // Initialize Verticies To Original Rectangle Location
     line.clear();
     line.addVertex(r.getTopLeft());
@@ -46,10 +51,10 @@ void ofApp::update(){
     // Add noise to vertices
     for (int i = 0; i < vertices.size(); i++) {
         
-        noiseSpread1 += 0.05;
-        noiseSpread2 += 0.03;
+        noiseSpread1 += 0.005;
+        noiseSpread2 += 0.003;
         
-        DISPLACE_AMPLITUDE = ofSignedNoise(0.03*ofGetElapsedTimef()/20)*800.0;
+        DISPLACE_AMPLITUDE = ofSignedNoise(0.03*ofGetElapsedTimef()/20)*600.0;
         // DISPLACE_AMPLITUDE = 200;
         vertices[i].x = vertices[i].x + ofSignedNoise(i*0.03, (ofGetElapsedTimef()*0.05)+noiseSpread1)*DISPLACE_AMPLITUDE;
         vertices[i].y = vertices[i].y + ofSignedNoise(i*0.05, (ofGetElapsedTimef()*0.08)+noiseSpread2)*DISPLACE_AMPLITUDE;
@@ -60,6 +65,11 @@ void ofApp::update(){
 void ofApp::draw() {
 
     // ofBackground(0);
+    
+    if(!START)
+    {
+        return;
+    }
     
     // Draw Line Segments
     for (int i = 0; i < vertices.size(); i++)
@@ -111,7 +121,11 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    if(key == OF_KEY_BACKSPACE)
+    {
+        ofBackground(0);
+        START = true;
+    }
 }
 
 //--------------------------------------------------------------
@@ -132,6 +146,7 @@ void ofApp::mousePressed(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     ofBackground(0);
+    START = true;
 }
 
 //--------------------------------------------------------------
