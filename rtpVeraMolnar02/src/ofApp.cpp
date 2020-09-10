@@ -3,6 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+    ofEnableAlphaBlending();
+    ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_MULTIPLY);
+    ofHideCursor();
+    START = false;
 }
 
 //--------------------------------------------------------------
@@ -13,15 +17,19 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-    int ROTATION_DEGREE = 5;
-    ofColor RECT_COLOR = ofColor(62, 90, 146);
-    
     ofBackground(255);
     
-    ofEnableAlphaBlending();
-    ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_MULTIPLY);
+    ofColor RECT_COLOR = ofColor(62, 90, 146);
     
     ofTranslate(ofGetWidth() / 2 + 31, ofGetHeight() / 2);
+    
+    float ROTATION_DEGREE = 5.0;
+    if(START == true) {
+        t += 0.1;
+        ROTATION_DEGREE += t;
+    }
+    
+    // ------------------------------------------------------------>
     
     int RECT_SIZE = 800;
     ofRectangle r;
@@ -155,12 +163,16 @@ void ofApp::draw()
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
+    if(key == OF_KEY_BACKSPACE)
+    {
+        START = !START;
+    }
 }
 
 //--------------------------------------------------------------
@@ -180,7 +192,7 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    START = !START;
 }
 
 //--------------------------------------------------------------
