@@ -23,6 +23,23 @@ void ofApp::setup(){
     
     // print received messages to the console
     midiIn.setVerbose(true);
+    
+    // print the available output ports to the console
+    midiOut.listOutPorts();
+    
+    // connect
+    midiOut.openPort(0); // by number
+    //midiOut.openPort("IAC Driver Pure Data In"); // by name
+    //midiOut.openVirtualPort("ofxMidiOut"); // open a virtual port
+    
+    channel = 1;
+    currentPgm = 0;
+    note = 0;
+    velocity = 0;
+    pan = 0;
+    bend = 0;
+    touch = 0;
+    polytouch = 0;
 }
 
 //--------------------------------------------------------------
@@ -38,7 +55,28 @@ void ofApp::draw(){
     
     int circleSize = 2;
     int circleCount = 80;
+    int noteShift = 0;
     float phaseChange = 0.1;
+    
+    // let's see something
+    ofSetColor(255);
+    stringstream text;
+    text << "connected to port " << midiOut.getPort()
+         << " \"" << midiOut.getName() << "\"" << endl
+         << "is virtual?: " << midiOut.isVirtual() << endl << endl
+         << "sending to channel " << channel << endl << endl
+         << "current program: " << currentPgm << endl << endl
+         << "note: " << note << endl
+         << "velocity: " << velocity << endl
+         << "pan: " << pan << endl
+         << "bend: " << bend << endl
+         << "touch: " << touch << endl
+         << "polytouch: " << polytouch << endl
+         << "noteShift: " << noteShift << endl
+         << "phaseChange: " << phaseChange << endl;
+    ;
+    ofDrawBitmapString(text.str(), 20, 20);
+    
     
     for(unsigned int i = 0; i < midiMessages.size(); ++i) {
 
@@ -90,6 +128,10 @@ void ofApp::draw(){
                         break;
                     case 76:
                         phaseChange = ofMap(message.value, 0, 127, 0, 2);
+                        break;
+                    case 77:
+                        noteShift = message.value;
+                        break;
                     default:
                         ofLog() << "Unimplemented MIDI Control Change";
                 }
@@ -99,29 +141,50 @@ void ofApp::draw(){
         }
     }
     
+    int x = 0;
+    int y = 0;
+    
     // DNA Twist
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*50, circleSize);
+        ofDrawCircle(i*20, ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*50, circleSize);
     }
     
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*100, circleSize);
+        ofDrawCircle(i*20, ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*100, circleSize);
     }
     
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*200, circleSize);
+        ofDrawCircle(i*20, ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*200, circleSize);
     }
     
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*250, circleSize);
+        ofDrawCircle(i*20, ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*250, circleSize);
     }
     
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*300, circleSize);
+        ofDrawCircle(i*20, ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*300, circleSize);
     }
     
+    ofSetColor(255, 0, 0);
     for(int i = 0; i < circleCount; i++) {
-        ofDrawCircle(i*20, ofGetWidth()/2+sin(ofGetElapsedTimef()*i*phaseChange)*350, circleSize);
+        y = ofGetHeight()/2+sin(ofGetElapsedTimef()*i*phaseChange)*350;
+        x = i*20;
+//        if(y < 400) {
+        if(i % 6 == 0) {
+            note = noteShift+ofMap(y, 0, ofGetHeight(), 127, 0);
+            velocity = 64;
+            midiOut.sendNoteOn(channel, note,  velocity);
+            
+            ofSetColor(255, note, note);
+            ofDrawCircle(x, y, circleSize);
+            
+            // print out both the midi note and the frequency
+//            ofLogNotice() << "note: " << note
+//                          << " freq: " << ofxMidi::mtof(note) << " Hz";
+        } else {
+            ofSetColor(255, 0, 0);
+            ofDrawCircle(i*20, y, circleSize);
+        }
     }
 }
 
@@ -152,6 +215,7 @@ void ofApp::exit() {
     // clean up
     midiIn.closePort();
     midiIn.removeListener(this);
+    midiOut.closePort();
 }
 
 //--------------------------------------------------------------

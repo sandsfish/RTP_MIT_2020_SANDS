@@ -23,9 +23,19 @@ class ofApp : public ofBaseApp, public ofxMidiListener {
 		void gotMessage(ofMessage msg);
 		
         void exit();
+        
+        // MIDI In
         void newMidiMessage(ofxMidiMessage& eventArgs);
         
         ofxMidiIn midiIn;
         std::vector<ofxMidiMessage> midiMessages;
         std::size_t maxMessages = 15; // max number of messages to keep track of
+    
+        // MIDI Out
+        ofxMidiOut midiOut;
+        int channel;
+        
+        unsigned int currentPgm;
+        int note, velocity;
+        int pan, bend, touch, polytouch;
 };
