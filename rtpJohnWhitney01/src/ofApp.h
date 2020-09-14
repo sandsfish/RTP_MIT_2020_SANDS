@@ -38,4 +38,6 @@ class ofApp : public ofBaseApp, public ofxMidiListener {
         unsigned int currentPgm;
         int note, velocity;
         int pan, bend, touch, polytouch;
+    
+        int circleCount;
 };

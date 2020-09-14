@@ -40,6 +40,7 @@ void ofApp::setup(){
     bend = 0;
     touch = 0;
     polytouch = 0;
+    circleCount = 80;
 }
 
 //--------------------------------------------------------------
@@ -54,7 +55,6 @@ void ofApp::draw(){
     ofSetColor(244, 132, 179);
     
     int circleSize = 2;
-    int circleCount = 80;
     int noteShift = 0;
     float phaseChange = 0.1;
     
