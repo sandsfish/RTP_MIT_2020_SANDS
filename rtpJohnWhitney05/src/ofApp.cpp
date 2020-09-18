@@ -3,8 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    x = 400;
-    y = 400;
 }
 
 //--------------------------------------------------------------
@@ -15,32 +13,15 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-//    float x_origin = 400;
-//    float y_origin = 400;
-//    float angle = ofGetElapsedTimef() * 5;
-//    float radius = 100 + 200 * sin(ofGetElapsedTimef() * 10.0);
-//
-//    float x = x_origin + radius * cos(angle);
-//    float y = y_origin + radius * sin(angle);
-//
-//    trail.addVertex(x, y);
-//    if(trail.size() > 200) {
-//        trail.getVertices().erase(trail.getVertices().begin());
-//    }
-//
-//    trail.close();
-////    trail.draw();
-//
-//    ofPath closed;
-//    auto vs = trail.getVertices();
-//    for(int i = 0; i < trail.size(); i++) {
-//        closed.lineTo(vs.at(i));
-//    }
-//    closed.setFilled(true);
-//    closed.setFillColor(ofColor::skyBlue);
-//    closed.draw();
+    ofSetColor(255, 0, 0);
+    for(int i = 0; i < ofGetWidth()/40; i++) {
+        for(int j = 0; j < ofGetHeight()/40; j++) {
+//            ofDrawCircle(40+i*40, 40+j*40, 10*sin(ofGetElapsedTimef()*i*0.01));
+            ofDrawCircle(30+i*40, 30+j*40, 2*i*sin(ofGetElapsedTimef()*i*0.02), 12);
+        }
+    }
     
-`
+}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
