@@ -2,7 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    font.load("00Cryonix.ttf", 100, true, true, true);
+//    font.load("00Cryonix.ttf", 100, true, true, true);
+    font.load("digit.ttf", 100, true, true, true);
 }
 
 //--------------------------------------------------------------
@@ -25,7 +26,8 @@ void ofApp::draw(){
     
     vector < ofPath > paths = font.getStringAsPoints("SANDS");
     
-    ofTranslate(600, -600, -100);
+//    ofTranslate(0, -600, 300);
+    ofTranslate(-200, 0, 0);
     
     // Each Letter
     for(int i = 0; i < paths.size(); i++) {
@@ -36,11 +38,12 @@ void ofApp::draw(){
         for(int j = 0; j < lines.size(); j++) {
             
             lines[j] = lines[j].getResampledBySpacing(4);
+            lines[j] = lines[j].getSmoothed(mouseX*0.1);
             
             // Each Point
             for(int k = 0; k < lines[j].size(); k++) {
                 
-                lines[j][k].z = lines[j][k].z + sin(ofGetElapsedTimef()*k*0.1);
+                lines[j][k].z = lines[j][k].z + sin(ofGetElapsedTimef())*k*20;
                 ofDrawCircle(lines[j][k], 2);
             }
         }
