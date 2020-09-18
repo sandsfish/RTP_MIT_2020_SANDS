@@ -1,1 +1,3 @@
 *.app/
+*/UserInterfaceState.xcuserstate
+*/*/*/xcuserdata/*
