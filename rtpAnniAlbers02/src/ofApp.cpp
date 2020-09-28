@@ -18,12 +18,12 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     
     ofDrawBitmapString("Sands Fish", 20, 30);
-    ofDrawBitmapString("After Bridget Riley", 20, 40);
-    ofDrawBitmapString(ofGetTimestampString("%c"), 20, 50);
+    ofDrawBitmapString("After Bridget Riley", 20, 42);
+    ofDrawBitmapString(ofGetTimestampString("%c"), 20, 54);
     
     int gridX = 20;
     int vertexCount = 11; //ofClamp(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, 100), 2, 200);
-    int lineCount = 7; //ofClamp(2+ofMap(mouseX, 0, ofGetWidth(), 0, 100), 2, 20);  //7;
+    int lineCount = 13; //ofClamp(2+ofMap(mouseX, 0, ofGetWidth(), 0, 100), 2, 20);  //7;
     int lineLength = 400;
     
     int shapeArrayWidth = (lineCount * gridX - gridX) / 2;
