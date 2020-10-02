@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    font.load("AgendaBoldCondensed.ttf", 200, true, true, true);
+    font.load("AgendaBoldCondensed.ttf", 20, true, true, true);
     
 }
 
@@ -15,23 +15,28 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    ofEnableDepthTest();
+//    ofEnableDepthTest();
     
-    cam.enableOrtho();
-    cam.begin();
+    // cam.enableOrtho();
+//    cam.begin();
     
-    ofBackground(255);
+    // ofBackground(255);
+//    ofColor colorOne(255);
+//    ofColor colorTwo(0);
+//    ofBackgroundGradient(colorOne, colorTwo, OF_GRADIENT_CIRCULAR);
     
     ofSetColor(0);
-    ofSetLineWidth(5);
-    ofFill();
+//    ofSetLineWidth(2);
+//    ofFill();
     
     ofPushMatrix();
     ofScale(1,-1);
     
     vector < ofPath > paths = font.getStringAsPoints("SANDS");
     
-    ofTranslate(-200, 0, 1000);
+    
+//    ofTranslate(-200, 0, 1000);
+    ofTranslate(20, -200);
     
     // Each Letter
     for(int i = 0; i < paths.size(); i++) {
@@ -42,23 +47,26 @@ void ofApp::draw(){
         for(int j = 0; j < lines.size(); j++) {
             
             lines[j].setClosed(true);
-            lines[j] = lines[j].getResampledBySpacing(2);
-            lines[j] = lines[j].getSmoothed(mouseX*0.01);
+//            lines[j] = lines[j].getResampledBySpacing(2);
+//            lines[j] = lines[j].getSmoothed(5);
             
             // Each Point
             for(int k = 0; k < lines[j].size(); k++) {
                 
                 // lines[j][k].z = lines[j][k].z + sin(ofGetElapsedTimef())*k*mouseY*0.01;
                 // ofDrawCircle(lines[j][k], 2);
+                ofSetColor(255, 0, 0);
+                ofDrawCircle(lines[j][k].x, lines[j][k].y, 2);
             }
             
             ofPushMatrix();
             
-            for(int m = 0; m < mouseY/10; m++) {
-
-                ofTranslate(250, 0);
+            for(int m = 0; m < mouseY/100; m++) {
+                
+                ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
                 lines[j].draw();
-                ofScale(mouseX/500., mouseY/500., 1);
+//                ofScale(mouseX/500.0, mouseY/500.0);
+                ofScale(mouseX/500.0);
             }
             ofPopMatrix();
             
@@ -67,6 +75,7 @@ void ofApp::draw(){
         // paths[i].draw();
     }
     ofPopMatrix();
+//    cam.end();
 }
 
 //--------------------------------------------------------------
