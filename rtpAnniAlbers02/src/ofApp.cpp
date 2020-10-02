@@ -15,28 +15,35 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    // bridget riley sketch color palette
     ofBackground(206, 195, 165);
     ofSetColor(42, 41, 37);
     
+    // time stamp
     ofDrawBitmapString("Sands Fish", 20, 30);
     ofDrawBitmapString("After Bridget Riley", 20, 44);
     ofDrawBitmapString(ofGetTimestampString("%c"), 20, 58);
     
+    // distance between vertical lines
     int gridX = 2;
     
+    // clamp vertex count and force to odd number
     int vertexCount = ofClamp(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, 100), 2, 200); //11;
     (vertexCount % 2 == 0) ? vertexCount = vertexCount+1 :  vertexCount;
     
+    // clamp line count and force to odd number
     int lineCount = ofClamp(2+ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 100), 2, 20);  //13;
     (lineCount % 2 == 0) ? lineCount = lineCount+1 :  lineCount;
     
+    // 2 lines or more
     int lineLength = ofClamp(2+ofMap(ofGetMouseY(), 0, ofGetWidth(), 20, ofGetHeight()), 2, ofGetWidth());
     
-    // Center drawing based on the width & height of the configured line/grid counts
+    // center drawing based on the width & height of the configured line/grid counts
     int shapeArrayWidth = (lineCount * gridX - gridX) / 2;
     int centeredOffsetX = ofGetWidth()/2 - shapeArrayWidth;
     int centeredOffsetY = ofGetHeight()/2 - lineLength / 2;
     
+    // line width for entire draw
     int lineWidth = 3;
     ofSetLineWidth(lineWidth);
     
