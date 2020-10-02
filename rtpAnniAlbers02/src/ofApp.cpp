@@ -24,6 +24,19 @@ void ofApp::draw(){
     ofDrawBitmapString("After Bridget Riley", 20, 44);
     ofDrawBitmapString(ofGetTimestampString("%c"), 20, 58);
     
+    drawRileyGrid(ofPoint(300, 0), 2.2, 0.65);
+    drawRileyGrid(ofPoint(700, 0), 1.5, 0.95);
+}
+
+
+//--------------------------------------------------------------
+void ofApp::drawRileyGrid(ofPoint m, float phase, float phaseMultiplier) {
+    
+    ofPushMatrix();
+    ofTranslate(m);
+    
+    //--------------------------------------------------------------
+    
     // distance between vertical lines
     int gridX = 2;
     
@@ -56,8 +69,12 @@ void ofApp::draw(){
     
         // Make parallel vertical polylines
         ofPolyline p;
-        p.addVertex( (sin(ofGetElapsedTimef()*0.65)*55*x) + centeredOffsetX + x * gridX, centeredOffsetY );
-        p.addVertex( (sin(ofGetElapsedTimef()*0.65+1.5)*55*x) + centeredOffsetX + x * gridX, centeredOffsetY+lineLength );
+//        p.addVertex( (sin(ofGetElapsedTimef()*0.65)*55*x) + centeredOffsetX + x * gridX, centeredOffsetY );
+//        p.addVertex( (sin(ofGetElapsedTimef()*0.65+1.5)*55*x) + centeredOffsetX + x * gridX, centeredOffsetY+lineLength );
+        
+        p.addVertex( (sin(ofGetElapsedTimef()*phaseMultiplier+(phase/2))*55*x) + x * gridX, centeredOffsetY );
+        p.addVertex( (sin(ofGetElapsedTimef()*phaseMultiplier+phase)*55*x) + x * gridX, centeredOffsetY+lineLength );
+        
         p = p.getResampledByCount(vertexCount); // .getSmoothed(20);
         lines.push_back(p);
     }
@@ -125,7 +142,15 @@ void ofApp::draw(){
         }
     }
     
+    ofLog() << m.x;
+    ofLog() << m.y;
+    
+    ofPopMatrix();
+    
+    return;
 }
+
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
