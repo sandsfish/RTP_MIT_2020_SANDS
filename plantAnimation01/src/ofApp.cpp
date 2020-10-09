@@ -4,11 +4,15 @@
 void ofApp::setup(){
 
     // leaf01.load("coffee_leaf1.png");
-    leaf01.load("pistons.png");
+    // leaf01.load("pistons.png");
+    //leaf01.load("all_flowers.jpg");
+    //leaf01.load("bubly_cherry.png");
+    leaf01.load("amethyst.png");
+    
     ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_SCREEN);
     ofEnableAlphaBlending();
     
-    leaf01.resize(leaf01.getWidth()+50, leaf01.getHeight()+50);
+    //leaf01.resize(leaf01.getWidth()+50, leaf01.getHeight()+50);
 }
 
 //--------------------------------------------------------------
@@ -21,7 +25,7 @@ void ofApp::draw(){
 
     ofBackground(255);
     
-    float speedMultiplier = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0.0, 4.0);
+    float speedMultiplier = ofMap(ofGetMouseX(), 0.0, ofGetWidth(), 0.0, 2.0); //4.0);  <--- From first set of iterations, want to dial this back
     
     float phase = 0;
     
@@ -115,7 +119,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    cout << x << "/" << y;
+    //cout << x << "/" << y;
 }
 
 //--------------------------------------------------------------
